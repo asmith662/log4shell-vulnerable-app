@@ -20,21 +20,23 @@ public class UserController {
 private UserRepository userRepository;
 
 @PostMapping(path="/add") // Map ONLY POST Requests
-public @ResponseBody String addNewUser (@RequestParam String name
- , @RequestParam String email, String ccNum, String ccExpiration, Integer ccSecCode, Integer ccZipCode) {
-// @ResponseBody means the returned String is the response, not a view name
-// @RequestParam means it is a parameter from the GET or POST request
+  public @ResponseBody String addNewUser (@RequestParam String name, 
+                                          @RequestParam String ccBrand,
+                                          @RequestParam String ccNum, 
+                                          @RequestParam String ccExpiration, 
+                                          @RequestParam String ccSecCode) {
+    // @ResponseBody means the returned String is the response, not a view name
+    // @RequestParam means it is a parameter from the GET or POST request
 
     User user = new User();
     user.setName(name);
-    user.setEmail(email);
+    user.setCCBrand(ccBrand);
     user.setCCNum(ccNum);
     user.setCCExpiration(ccExpiration);
     user.setCCSecCode(ccSecCode);
-    user.setCCZipCode(ccZipCode);
     userRepository.save(user);
     return "Saved";
-}
+  }
 
 @GetMapping(path="/all")
 public @ResponseBody Iterable<User> getAllUsers() {
